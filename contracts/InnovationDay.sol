@@ -99,13 +99,23 @@ contract InnovationDay
     {
         require(balances[msg.sender]>0);
         require(allowedCodes[hashedcode]);
+        // require(usedCodes[msg.sender][hashedcode] == false);
+        usedCodes[msg.sender][hashedcode] = true;
         balances[msg.sender] = balances[msg.sender].sub(1);
+        emit TokenSpent();
         return true;
     }
+
+    function codeUsedByUser(bytes32 hashedcode) public view returns (bool used)
+    {
+        return usedCodes[msg.sender][hashedcode];
+    }
+
     function balanceOf(address tokenOwner) public view returns (uint balance)
     {
         return balances[tokenOwner];
     }
 
     event ContractDeployed();
+    event TokenSpent();
 }

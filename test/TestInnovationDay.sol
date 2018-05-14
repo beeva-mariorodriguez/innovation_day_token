@@ -49,5 +49,6 @@ contract TestInnovationDay
         innovationday.addTokens(this, 1);
         innovationday.spendToken(hashedcode);
         Assert.equal(innovationday.balanceOf(this), 0, "testSpendToken() failed");
+        Assert.equal(innovationday.codeUsedByUser(hashedcode), true, "testSpendToken() failed");
     }
 }
