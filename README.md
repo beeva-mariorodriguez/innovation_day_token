@@ -2,7 +2,7 @@
 
 ## contract
 ```solidity
-contract innovation_day {
+contract InnovationDay {
     address admin;
     string public name;
     string public symbol;
@@ -16,7 +16,7 @@ contract innovation_day {
     constructor() public {}
     // administration
     function allowCode(string code) public onlyAdmin returns (bool success) {}
-    function allowHashedCode(bytes32 hash) public onlyAdmin returns (bool success) {}
+    function allowHashedCode(bytes32 codeh) public onlyAdmin returns (bool success) {}
     function addTokens(address tokenOwner, uint tokens) public onlyAdmin returns (bool success) {}
     function changePrice(uint _price) public onlyOwner {
         price = _price;
