@@ -51,4 +51,16 @@ contract TestInnovationDay
         Assert.equal(innovationday.balanceOf(this), 0, "testSpendToken() failed");
         Assert.equal(innovationday.codeUsedByUser(hashedcode), true, "testSpendToken() failed");
     }
+
+    function testSpendtokenWithMessage() public
+    {
+        string memory code = "test";
+        bytes32 hashedcode = sha256(code);
+        innovationday.allowHashedCode(hashedcode);
+        innovationday.addTokens(this, 1);
+        innovationday.spendToken(hashedcode,"this is a test!");
+        Assert.equal(innovationday.balanceOf(this), 0, "testSpendTokenWithMessage() failed");
+        Assert.equal(innovationday.codeUsedByUser(hashedcode), true, "testSpendTokenWithMessage() failed");
+    }
+
 }

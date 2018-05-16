@@ -102,7 +102,18 @@ contract InnovationDay
         // require(usedCodes[msg.sender][hashedcode] == false);
         usedCodes[msg.sender][hashedcode] = true;
         balances[msg.sender] = balances[msg.sender].sub(1);
-        emit TokenSpent();
+        emit TokenSpent("");
+        return true;
+    }
+
+    function spendToken(bytes32 hashedcode, string data) public returns (bool success)
+    {
+        require(balances[msg.sender]>0);
+        require(allowedCodes[hashedcode]);
+        // require(usedCodes[msg.sender][hashedcode] == false);
+        usedCodes[msg.sender][hashedcode] = true;
+        balances[msg.sender] = balances[msg.sender].sub(1);
+        emit TokenSpent(data);
         return true;
     }
 
@@ -117,5 +128,5 @@ contract InnovationDay
     }
 
     event ContractDeployed();
-    event TokenSpent();
+    event TokenSpent(string data);
 }
