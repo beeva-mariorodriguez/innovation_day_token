@@ -131,14 +131,14 @@ contract InnovationDay
     }
 
 
-    function autoclaim() public {
+    function autoclaim(string nick) public {
         require(registered[msg.sender]==false);
         registered[msg.sender]=true;
         balances[msg.sender]=initialValue;
-        emit initialClaim(msg.sender);
+        emit initialClaim(msg.sender, nick);
     }
 
     event ContractDeployed();
     event TokenSpent(string data);
-    event initialClaim(address addr);
+    event initialClaim(address addr, string nick);
 }
