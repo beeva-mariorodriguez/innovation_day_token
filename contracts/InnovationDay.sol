@@ -132,8 +132,8 @@ contract InnovationDay
 
 
     function autoclaim() public {
-        require(registered[msg.sender]==False);
-        registered[msg.sender]=True;
+        require(registered[msg.sender]==false);
+        registered[msg.sender]=true;
         balances[msg.sender]=initialValue;
         emit initialClaim(msg.sender);
     }
