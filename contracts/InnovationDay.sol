@@ -30,7 +30,9 @@ contract InnovationDay
     string public name;
     string public symbol;
     uint256 price;
+    uint256 initialValue;
     mapping(bytes32 => bool) allowedCodes;
+    mapping(address => bool) registered;
     mapping(address => uint) balances;
     mapping(address => mapping(bytes32 => bool)) usedCodes;
 
@@ -47,6 +49,7 @@ contract InnovationDay
         admin = msg.sender;
         name = "INNOVATION";
         symbol = "INN";
+        initialValue = 10;
         //price = 1 ether;
         emit ContractDeployed();
     }
@@ -127,6 +130,15 @@ contract InnovationDay
         return balances[tokenOwner];
     }
 
+
+    function autoclaim() public {
+        require(registered[msg.sender]==false);
+        registered[msg.sender]=true;
+        balances[msg.sender]=initialValue;
+        emit initialClaim(msg.sender);
+    }
+
     event ContractDeployed();
     event TokenSpent(string data);
+    event initialClaim(address addr);
 }
