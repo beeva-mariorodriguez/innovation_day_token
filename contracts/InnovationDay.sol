@@ -131,13 +131,11 @@ contract InnovationDay
     }
 
 
-    function autoclaim(){
-        require(balances[msg.sender]==0);
-        if(!registered[msg.sender]){
-            registered[msg.sender]=true;
-            balances[msg.sender]=initialValue;
-            emit initialClaim(msg.sender);
-        }
+    function autoclaim() public {
+        require(registered[msg.sender]==False);
+        registered[msg.sender]=True;
+        balances[msg.sender]=initialValue;
+        emit initialClaim(msg.sender);
     }
 
     event ContractDeployed();
