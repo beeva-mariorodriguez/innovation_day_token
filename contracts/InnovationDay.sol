@@ -102,9 +102,11 @@ contract InnovationDay
 
     function spendToken(address addr, string data) public returns (bool success)
     {
-        spendToken(addr);
-        emit TokenSpent(data);
-        return true;
+        if(spendToken(addr)){
+            emit TokenSpent(data);
+            return true;
+        }
+        return false;
     }
 
     function codeUsedByUser(bytes32 hashedcode) public view returns (bool used)
