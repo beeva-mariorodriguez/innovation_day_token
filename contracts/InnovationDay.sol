@@ -91,31 +91,18 @@ contract InnovationDay
     }
 
     // user functions
-    function buyToken() public payable returns(uint amount)
-    {
-        amount = msg.value.div(price);
-        balances[msg.sender] = balances[msg.sender].add(amount);
-        return amount;
-    }
 
-    function spendToken(bytes32 hashedcode) public returns (bool success)
+    function spendToken(address addr) public returns (bool success)
     {
         require(balances[msg.sender]>0);
-        require(allowedCodes[hashedcode]);
-        // require(usedCodes[msg.sender][hashedcode] == false);
-        usedCodes[msg.sender][hashedcode] = true;
         balances[msg.sender] = balances[msg.sender].sub(1);
-        emit TokenSpent("");
+        balances[addr] = balances[addr].add(1);
         return true;
     }
 
-    function spendToken(bytes32 hashedcode, string data) public returns (bool success)
+    function spendToken(address addr, string data) public returns (bool success)
     {
-        require(balances[msg.sender]>0);
-        require(allowedCodes[hashedcode]);
-        // require(usedCodes[msg.sender][hashedcode] == false);
-        usedCodes[msg.sender][hashedcode] = true;
-        balances[msg.sender] = balances[msg.sender].sub(1);
+        spendToken(addr);
         emit TokenSpent(data);
         return true;
     }
@@ -136,6 +123,10 @@ contract InnovationDay
         registered[msg.sender]=true;
         balances[msg.sender]=initialValue;
         emit initialClaim(msg.sender, nick);
+    }
+
+    function isRegistered(address addr) public view returns (bool userRegistered){
+        return registered[addr];
     }
 
     event ContractDeployed();
