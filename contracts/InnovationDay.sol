@@ -33,7 +33,7 @@ contract InnovationDay
     uint256 initialValue;
     mapping(address => bool) registered;
     mapping(address => uint) balances;
-    mapping(address => mapping(bytes32 => bool)) usedCodes;
+    mapping(address => mapping(address => bool)) expenses;
 
     using SafeMath for uint;
 
@@ -97,31 +97,33 @@ contract InnovationDay
         return amount;
     }
 
-    function spendToken(bytes32 hashedcode, uint amount) public returns (bool success)
+    function spendToken(address standAddress, uint amount) public returns (bool success)
     {
         require(balances[msg.sender]>0);
         //require(allowedCodes[hashedcode]);
-        require(usedCodes[msg.sender][hashedcode] == false);
-        usedCodes[msg.sender][hashedcode] = true;
+        require(expenses[msg.sender][standAddress] == false);
+        expenses[msg.sender][standAddress] = true;
         balances[msg.sender] = balances[msg.sender].sub(amount);
+        balances[standAddress] = balances[standAddress].add(amount);
         emit TokenSpent("");
         return true;
     }
 
-    function spendToken(bytes32 hashedcode, uint amount,  string data) public returns (bool success)
+    function spendToken(address standAddress, uint amount,  string data) public returns (bool success)
     {
         require(balances[msg.sender]>0);
         //require(allowedCodes[hashedcode]);
-        require(usedCodes[msg.sender][hashedcode] == false);
-        usedCodes[msg.sender][hashedcode] = true;
+        require(expenses[msg.sender][standAddress] == false);
+        expenses[msg.sender][standAddress] = true;
         balances[msg.sender] = balances[msg.sender].sub(amount);
+        balances[standAddress] = balances[standAddress].add(amount);
         emit TokenSpent(data);
         return true;
     }
 
-    function codeUsedByUser(bytes32 hashedcode) public view returns (bool used)
+    function expenseByUser(address standAddress) public view returns (bool used)
     {
-        return usedCodes[msg.sender][hashedcode];
+        return expenses[msg.sender][standAddress];
     }
 
     function balanceOf(address tokenOwner) public view returns (uint balance)
