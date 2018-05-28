@@ -97,17 +97,17 @@ contract InnovationDay
         return amount;
     }
 
-    function spendToken(address standAddress, uint amount) public returns (bool success)
-    {
-        require(balances[msg.sender]>0);
-        //require(allowedCodes[hashedcode]);
-        require(expenses[msg.sender][standAddress] == false);
-        expenses[msg.sender][standAddress] = true;
-        balances[msg.sender] = balances[msg.sender].sub(amount);
-        balances[standAddress] = balances[standAddress].add(amount);
-        emit TokenSpent("");
-        return true;
-    }
+//    function spendToken(address standAddress, uint amount) public returns (bool success)
+//    {
+//        require(balances[msg.sender]>0);
+//        //require(allowedCodes[hashedcode]);
+//        require(expenses[msg.sender][standAddress] == false);
+//        expenses[msg.sender][standAddress] = true;
+//        balances[msg.sender] = balances[msg.sender].sub(amount);
+//        balances[standAddress] = balances[standAddress].add(amount);
+//        emit TokenSpent("");
+//        return true;
+//    }
 
     function spendToken(address standAddress, uint amount,  string data) public returns (bool success)
     {
