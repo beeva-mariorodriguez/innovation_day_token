@@ -113,11 +113,16 @@ contract InnovationDay
     {
         require(balances[msg.sender]>0);
         //require(allowedCodes[hashedcode]);
-        require(expenses[msg.sender][standAddress] == false);
-        expenses[msg.sender][standAddress] = true;
-        balances[msg.sender] = balances[msg.sender].sub(amount);
-        balances[standAddress] = balances[standAddress].add(amount);
-        emit TokenSpent(data);
+        //require doesnt emit events to web layer.
+        //require(expenses[msg.sender][standAddress] == false);
+        if(expenses[msg.sender][standAddress] == false){
+            expenses[msg.sender][standAddress] = true;
+            balances[msg.sender] = balances[msg.sender].sub(amount);
+            balances[standAddress] = balances[standAddress].add(amount);
+            emit TokenSpent(data,true);
+        }else{
+            emit TokenSpent(data,false);
+        }
         return true;
     }
 
@@ -148,6 +153,6 @@ contract InnovationDay
 
 
     event ContractDeployed();
-    event TokenSpent(string data);
+    event TokenSpent(string data, bool success);
     event initialClaim(address addr, string nick);
 }
